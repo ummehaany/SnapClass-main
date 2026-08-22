@@ -1,0 +1,45 @@
+streamlit
+# Utilitites 
+numpy
+pandas
+
+# FACE RECOGNITION
+scikit-learn
+dlib-bin
+git+https://github.com/ageitgey/face_recognition_models
+# face_recognition_models imports pkg_resources at runtime (not just build
+# time) to locate its .dat model files. setuptools removed pkg_resources
+# starting in 82.0.0, so we cap below that (setuptools itself warns
+# "pin to Setuptools<81" once you approach the boundary). torch 2.13.0
+# requires setuptools>=77.0.3, which sets the floor. Verified: this range
+# still lets face_recognition_models resolve its model paths correctly.
+setuptools>=77.0.3,<81
+
+
+supabase
+bcrypt
+
+
+
+segno
+pillow
+
+
+
+librosa
+
+# VOICE RECOGNITION (cont.) — resemblyzer depends on torch, which is
+# otherwise unpinned and resolves to the default CUDA/GPU build on Linux
+# (pulling several GB of unused nvidia-* packages). This app runs on CPU
+# only (voice_pipeline.py never calls .cuda()), so point pip at PyTorch's
+# CPU-only package index. Pin the bare version (no "+cpu" suffix): PEP 440
+# requires that a bare version specifier ignore any local-version label on
+# candidates, so "==2.13.0" still matches a "2.13.0+cpu" wheel from this
+# index — and a local-labelled version sorts higher than the plain one, so
+# pip prefers it over the CUDA build on default PyPI. Pinning the literal
+# "+cpu" suffix instead is over-specific: it only matches if that exact
+# local label exists for this release/platform, which is what broke the
+# previous install.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.13.0
+resemblyzer
